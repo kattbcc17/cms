@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Contact } from '../contact.model';
 import { CommonModule } from '@angular/common';
-import { ContactItemComponent } from '../contact-item/contact-item.component';  // Import ContactItemComponent
+// import { ContactItemComponent } from '../contact-item/contact-item.component';  // Import ContactItemComponent
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, ContactItemComponent],
+  imports: [CommonModule],
   selector: 'cms-contact-list',
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css']
 })
   
-export class ContactListComponent {
+export class ContactListComponent implements OnInit {
+  @Output() contactWasSelected = new EventEmitter<Contact>();
   
   contacts: Contact[] = [
     new Contact(
@@ -34,7 +35,11 @@ export class ContactListComponent {
   ];
 
 
-  onNewContact() {
-    console.log('clicked!');
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  onContactSelected(contact: Contact) {
+    this.contactWasSelected.emit(contact);
   }
 }
