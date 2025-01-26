@@ -1,1 +1,18 @@
-<p>contact-item works!</p>
+<a>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Contacts</h3>
+        <a class="btn btn-primary pull-right" href="#">New Contact</a>
+      </div>
+      <div class="panel-body">
+        <div class="contact-item">
+          <!-- Show the contact's image -->
+          <img [src]="imagePath + contact.imageUrl" alt="{{ contact.name }}" class="contact-img" />
+          
+          <!-- Display the contact's name using interpolation-->
+          <p>{{ contact.name }}</p>
+        </div>
+      </div>
+    </div>
+  </a>
+  

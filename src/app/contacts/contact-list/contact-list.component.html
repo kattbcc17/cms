@@ -1,17 +1,11 @@
 <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Contacts</h3>
-      <a class="btn btn-primary pull-right" href="#">New Contact</a>
+      <button class="btn btn-primary pull-right" (click)="onNewContact()">New Contact</button>
     </div>
     <div class="panel-body">
-      <!-- Loop through each contact to display their info -->
-      <div *ngFor="let contact of contacts" class="contact-item">
-        <!-- Show the contact's image -->
-        <img [src]="imagePath + contact.imageUrl" alt="{{ contact.name }}" class="contact-img" />
-        
-        <!-- Display the contact's name using interpolation-->
-        <p>{{ contact.name }}</p>
-      </div>
+      <cms-contact-item *ngFor="let contactEle of contacts" [contact]="contactEle"></cms-contact-item>
+    </div>
     </div>
   </div>
   
