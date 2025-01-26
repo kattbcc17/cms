@@ -1,11 +1,11 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Contacts</h3>
-      <button class="btn btn-primary pull-right" (click)="onNewContact()">New Contact</button>
-    </div>
-    <div class="panel-body">
-      <cms-contact-item *ngFor="let contactEle of contacts" [contact]="contactEle"></cms-contact-item>
-    </div>
-    </div>
+  <div class="panel-heading">
+    <h1>Contacts</h1>
+    <button class="btn btn-success" (click)="onNewContact()">New Contact</button>
   </div>
-  
+  <div class="panel-body">
+    <cms-contact-item *ngFor="let contactEle of contacts" 
+    [contact]="contactEle">
+  </cms-contact-item>
+  </div>
+</div>
