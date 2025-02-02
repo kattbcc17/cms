@@ -1,0 +1,9 @@
+.documentDiv {
+  width: 9rem;
+  height: 11rem;
+  margin: 2px;
+  font-size: 1.3rem;
+  border: solid thin rgb(56, 21, 21);
+  float: left;
+  padding: 1rem;
+}
