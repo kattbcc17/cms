@@ -33,11 +33,14 @@ export class DocumentDetailComponent implements OnInit {
     this.nativeWindow = this.winService.getNativeWindow();
   }
 
-  onView() {
+  onView(): void {
     if (this.document.imageUrl) {
-      this.nativeWindow.open(this.document.imageUrl);
+      this.nativeWindow.open(this.document.imageUrl, '_blank');  // Open document in a new tab
+    } else {
+      console.error('Document URL is not available');
     }
   }
+
 
   onDelete() {
     this.documentService.deleteDocument(this.document);
