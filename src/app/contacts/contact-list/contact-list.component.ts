@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
@@ -11,6 +12,8 @@ import { ContactService } from '../contact.service';
 })
 export class ContactListComponent implements OnInit {
   contacts: Contact[] = [];
+  // Step 1: Create Subscription variable
+  subscription: Subscription;
 
   constructor(private contactService: ContactService) {}
 
@@ -19,5 +22,11 @@ export class ContactListComponent implements OnInit {
     this.contactService.contactChangedEvent.subscribe((arr: Contact[]) => {
       this.contacts = arr;
     });
+    this.subscription = this.contactService.contactListChangedEvent.subscribe(
+      (contactList: Contact[]) => (this.contacts = contactList)
+    );
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe(); // Step 3: Unsubscribe to prevent memory leaks
   }
 }
