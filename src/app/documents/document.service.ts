@@ -48,21 +48,21 @@ export class DocumentService implements OnInit {
     newDocument.id = String(this.maxDocumentId);
     this.documents.push(newDocument);
     let documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone); // Notify subscribers
+    this.documentListChangedEvent.next(documentsListClone);
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
     if (!originalDocument || !newDocument) {
       return;
     }
-    let pos = this.documents.indexOf(originalDocument); 
+    let pos = this.documents.indexOf(originalDocument);
     if (pos < 0) {
       return;
     }
     newDocument.id = originalDocument.id;
     this.documents[pos] = newDocument;
     let documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone); // Notify subscribers
+    this.documentListChangedEvent.next(documentsListClone);
   }
 
   deleteDocument(document: Document) {
@@ -75,6 +75,6 @@ export class DocumentService implements OnInit {
     }
     this.documents.splice(pos, 1);
     let documentsListClone = this.documents.slice();
-    this.documentChangedEvent.next(documentsListClone); // Notify subscribers
+    this.documentChangedEvent.next(documentsListClone);
   }
 }

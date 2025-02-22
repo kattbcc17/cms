@@ -12,7 +12,7 @@ export class ContactService implements OnInit {
   maxContactId: number;
   @Output() contactSelectedEvent = new EventEmitter<Contact>();
   @Output() contactChangedEvent = new EventEmitter<Contact[]>();
-  contactListChangedEvent = new Subject<Contact[]>(); // Step 1: Create Subject
+  contactListChangedEvent = new Subject<Contact[]>();
 
   constructor() {
     this.contacts = MOCKCONTACTS;
@@ -52,7 +52,7 @@ export class ContactService implements OnInit {
     this.maxContactId++;
     newContact.id = String(this.maxContactId);
     this.contacts.push(newContact);
-    let contactsListClone = this.contacts.slice(); // Notify subscribers
+    let contactsListClone = this.contacts.slice();
     this.contactListChangedEvent.next(contactsListClone);
   }
 
@@ -66,7 +66,7 @@ export class ContactService implements OnInit {
     }
     newContact.id = originalContact.id;
     this.contacts[pos] = newContact;
-    let contactsListClone = this.contacts.slice(); // Notify subscribers
+    let contactsListClone = this.contacts.slice();
     this.contactListChangedEvent.next(contactsListClone);
   }
 
@@ -79,7 +79,7 @@ export class ContactService implements OnInit {
       return;
     }
     this.contacts.splice(pos, 1);
-    let contactsListClone = this.contacts.slice(); // Notify subscribers.
-    this.contactChangedEvent.emit(this.contacts.slice());
+    let contactsListClone = this.contacts.slice();
+    this.contactListChangedEvent.next(contactsListClone);
   }
 }
