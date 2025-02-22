@@ -79,7 +79,7 @@ export class ContactService implements OnInit {
       return;
     }
     this.contacts.splice(pos, 1);
-    let contactsListClone = this.contacts.slice(); // Notify subscribers
+    let contactsListClone = this.contacts.slice(); // Notify subscribers.
     this.contactChangedEvent.emit(this.contacts.slice());
   }
 }
