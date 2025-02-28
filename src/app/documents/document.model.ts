@@ -5,6 +5,6 @@ export class Document {
     public description: string,
     public imageUrl: string,
     public url: string,
-    public children: []
+    public children: Document[]
   ) {}
 }

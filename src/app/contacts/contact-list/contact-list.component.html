@@ -10,12 +10,8 @@
       <div class="clearfix center-block"></div>
     </div>
     <div class="panel-body">
-      <div class="col-xs-12">
-        <cms-contact-item
-          *ngFor="let contactEl of contacts; let i = index"
-          [contact]="contactEl"
-          [index]="i"
-        ></cms-contact-item>
+      <div class="col-xs-12" *ngFor="let contactEl of contacts; let i = index" cdkDrag [cdkDragData]="contactEl">
+        <<cms-contact-item [contact]="contactEl" [index]="i"></cms-contact-item>
       </div>
     </div>
   </div>

@@ -16,7 +16,8 @@
             name="name"
             [(ngModel)]="document.name"
             #name="ngModel"
-            required>
+            required
+            (ngModelChange)="f.form.markAllAsTouched()"> <!-- Ensures validation triggers on change -->
           <div *ngIf="name.invalid && name.touched" class="alert alert-danger">
             Document Title is required.
           </div>
@@ -34,7 +35,9 @@
             size="120"
             max="255"
             name="description"
-            [(ngModel)]="document.description">
+            [(ngModel)]="document.description"
+            #description="ngModel"
+            (ngModelChange)="f.form.markAllAsTouched()"> <!-- Ensures validation triggers on change -->
         </div>
       </div>
 
@@ -51,7 +54,8 @@
             name="url"
             [(ngModel)]="document.url"
             #url="ngModel"
-            required>
+            required
+            (ngModelChange)="f.form.markAllAsTouched()"> <!-- Ensures validation triggers on change -->
           <div *ngIf="url.invalid && url.touched" class="alert alert-danger">
             Document URL is required.
           </div>

@@ -21,17 +21,13 @@ export class ContactService implements OnInit {
 
   ngOnInit() {}
 
-  getContacts(): Contact[] {
-    return this.contacts.slice();
-  }
-
-  getContact(id: string): Contact {
+  getContact(id: string): Contact | undefined {
     for (const contact of this.contacts) {
       if (contact.id === id) {
         return contact;
       }
     }
-    return null;
+    return undefined; // Return undefined if contact is not found
   }
 
   getMaxId(): number {

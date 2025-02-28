@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
+import { DndModule } from 'ng2-dnd';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
@@ -22,6 +22,9 @@ import { ContactService } from './contacts/contact.service';
 import { AppRoutingModule } from './app-routing.module';
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
+import { MessageService } from './messages/message.service';
+import { DocumentService } from './documents/document.service';
+
 
 @NgModule({
   declarations: [
@@ -47,8 +50,10 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
     AppRoutingModule,
     FormsModule,
     DragDropModule,
+    ReactiveFormsModule,
+    DndModule.forRoot()
   ],
-  providers: [ContactService],
+  providers: [ContactService, MessageService, DocumentService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
