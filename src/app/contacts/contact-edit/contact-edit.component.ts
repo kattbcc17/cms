@@ -1,123 +1,116 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 @Component({
   selector: 'cms-contact-edit',
   standalone: false,
-  
   templateUrl: './contact-edit.component.html',
   styleUrl: './contact-edit.component.css'
 })
 export class ContactEditComponent implements OnInit {
+  @ViewChild('f', { static: false }) slForm: NgForm;
   originalContact: Contact;
   contact: Contact;
   groupContacts: Contact[] = [];
   editMode: boolean = false;
   id: string;
-  
 
-  constructor(private contactService: ContactService,
+  constructor(
+    private contactService: ContactService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
-  
+
+  // This method checks if a contact is valid for adding to the group
   isInvalidContact(newContact: Contact): boolean {
-    if (!newContact) { // Check if newContact is null or undefined
+    if (!newContact) {
       return true;
     }
-    if (this.contact && newContact.id === this.contact.id) { // Check if contact is the same as the edited contact
+    if (this.contact && newContact.id === this.contact.id) {
       return true;
     }
     for (let i = 0; i < this.groupContacts.length; i++) {
-      if (newContact.id === this.groupContacts[i].id) { // Check if the contact is already in the group
+      if (newContact.id === this.groupContacts[i].id) {
         return true;
       }
     }
-    return false; // Contact is not in the group
+    return false;
   }
 
+  // Add a dragged contact to the group
   addToGroup(event: CdkDragDrop<Contact[]>) {
-    const draggedContact = event.item.data;  // Get the dragged contact
+    const draggedContact = event.item.data; 
     if (draggedContact && !this.groupContacts.includes(draggedContact)) {
-      this.groupContacts.push(draggedContact);  // Add to the groupContacts array
+      this.groupContacts.push(draggedContact);
     }
   }
-  
 
+  // This lifecycle hook initializes the component with the contact data if editing
   ngOnInit(): void { 
-    // Get the route parameter 'id' for editing an existing contact
     this.route.params.subscribe((params: Params) => {
-      this.id = params['id'];  // Get the 'id' from route parameters
-      if (!this.id) {
-        this.editMode = false; // If no 'id' in the URL, it's a new contact
+      const id = params['id'];
+      if (!id) {
+        this.editMode = false;
         return;
       }
-      // If 'id' exists, fetch the existing contact
-      this.originalContact = this.contactService.getContact(this.id);
+      this.originalContact = this.contactService.getContact(id);
       if (!this.originalContact) {
-        return; // If the contact does not exist, return
+        return;
       }
+      this.editMode = true;
+      this.contact = { ...this.originalContact }; // Clone the originalContact
 
-      this.editMode = true; // We're in edit mode
-      this.contact = JSON.parse(JSON.stringify(this.originalContact)); // Clone the contact
-
-      // If the contact has a group, clone the group as well
-      if (this.originalContact.group) {
-        this.groupContacts = JSON.parse(JSON.stringify(this.originalContact.group));
+      if (this.contact.group) {
+        this.groupContacts = [...this.contact.group]; // Spread to clone the array
       }
     });
   }
-  // Handle the drop event when a contact is dropped into the group
+
+  // Handle the drop event for rearranging contacts within the group
   onContactDropped(event: CdkDragDrop<Contact[]>): void {
-    if (event.previousContainer !== event.container) {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+    if (event.previousIndex !== event.currentIndex) {
+      moveItemInArray(this.groupContacts, event.previousIndex, event.currentIndex);
     }
   }
 
-  // Check if the dragged contact is already in the group
+  // Check if a contact is already in the group
   isContactInGroup(contact: Contact): boolean {
     return this.groupContacts.some((groupContact) => groupContact.id === contact.id);
   }
-  
-  // Handle form submission
-  onSubmit(contactForm: NgForm): void {
-    if (contactForm.invalid) {
-      return;
-    }
-  
+
+  // Handle form submission: either add or update the contact
+  onSubmit(form: NgForm): void {
+    let value = form.value;
+    let newContact = new Contact(
+      value.id,
+      value.name,
+      value.email,
+      value.phone,
+      value.imageUrl,
+      value.group
+    );
     if (this.editMode) {
-      // Update existing contact by passing original and new contact
-      this.contactService.updateContact(this.originalContact, this.contact);
+      this.contactService.updateContact(this.originalContact!, newContact); // Ensure originalContact is defined
     } else {
-      // Add new contact
-      this.contactService.addContact(this.contact);
+      this.contactService.addContact(newContact);
+      this.onCancel();
     }
-  
-    // Navigate back to the contacts list
+  }
+
+  // Reset the form and navigate back
+  onCancel() {
+    this.slForm.reset();
     this.router.navigate(['/contacts']);
   }
 
-
-  onCancel(): void {
-    console.log('Cancel button clicked');
-    this.router.navigate(['/contacts']);
-  }
-
- // Remove item from groupContacts list
-  onRemoveItem(index: number) {
-    if (index < 0 || index >= this.groupContacts.length) {
-      return; // Exit if the index is out of bounds
+  // Remove a contact from the group
+  onRemoveItem(index: number): void {
+    if (index >= 0 && index < this.groupContacts.length) {
+      this.groupContacts.splice(index, 1);
     }
-    this.groupContacts.splice(index, 1); // Remove the contact from the group
   }
-
 }
-

@@ -10,6 +10,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
   templateUrl: './contact-detail.component.html',
   styleUrl: './contact-detail.component.css',
 })
+  
 export class ContactDetailComponent implements OnInit {
   contact: Contact;
   id: string;

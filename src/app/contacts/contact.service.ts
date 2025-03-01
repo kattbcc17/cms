@@ -7,6 +7,7 @@ import { MOCKCONTACTS } from './MOCKCONTACTS';
 @Injectable({
   providedIn: 'root',
 })
+  
 export class ContactService implements OnInit {
   contacts: Contact[] = [];
   maxContactId: number;
@@ -21,8 +22,13 @@ export class ContactService implements OnInit {
 
   ngOnInit() {}
 
-  getContact(id: string): Contact | undefined {
-    return this.contacts.find(contact => contact.id === id);
+  getContact(id: string): Contact {
+    for (const contact of this.contacts) {
+      if (contact.id === id) {
+        return contact;
+      }
+    }
+    return null;
   }
 
   getContacts(): Contact[] {

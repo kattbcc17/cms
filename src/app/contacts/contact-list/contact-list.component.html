@@ -2,16 +2,20 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <span class="pull-left">
-        <h3><strong>Contacts</strong></h3>
+        <h3>
+          <strong>Contacts</strong>
+        </h3>
       </span>
-      <a class="btn btn-success pull-right" routerLink="new">New Contact</a>
+      <a class="btn btn-success pull-right" routerLink="new"> New Contact </a>
       <div class="clearfix center-block"></div>
     </div>
     <div class="panel-body">
-      <div cdkDropList [cdkDropListData]="contacts">
-        <div *ngFor="let contactEl of contacts; let i = index" cdkDrag [cdkDragData]="contactEl">
-          <cms-contact-item [contact]="contactEl" [index]="i"></cms-contact-item>
-        </div>
+      <div class="col-xs-12">
+        <cms-contact-item
+          *ngFor="let contactEl of contacts; let i = index"
+          [contact]="contactEl"
+          [index]="i"
+        ></cms-contact-item>
       </div>
     </div>
   </div>
