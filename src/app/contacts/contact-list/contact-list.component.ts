@@ -25,4 +25,8 @@ export class ContactListComponent implements OnInit {
       (contactList: Contact[]) => (this.contacts = contactList)
     );
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe(); // Unsubscribe from the event to avoid memory leaks
+  }
 }

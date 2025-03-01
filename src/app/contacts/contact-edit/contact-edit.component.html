@@ -81,17 +81,24 @@
       <div class="row">
         <div class="form-group">
           <label for="groupList">Group Contacts:</label>
-          <div class="row" id="groupList" style="min-height: 3rem;" cdkDropList (cdkDropListDropped)="onContactDropped($event)">
-            <div *ngFor="let contact of groupContacts; let i = index">
-              <div>
-                <cms-contact-item class="col-sm-11" [contact]="contact"></cms-contact-item>
-                <button class="btn btn-danger col-sm-2 deleteButton" (click)="onRemoveItem(i)">X</button>
-              </div>
+          <div class="row" id="groupList"
+               cdkDropList
+               [cdkDropListData]="groupContacts"
+               (cdkDropListDropped)="addToGroup($event)"
+               style="min-height: 3rem; border: 1px dashed gray; padding: 10px;">
+            
+            <!-- Loop through group contacts and show each one with remove button -->
+            <div *ngFor="let contact of groupContacts; let i = index" cdkDrag>
+              <cms-contact-item class="col-sm-11" [contact]="contact"></cms-contact-item>
+              <button class="btn btn-danger col-sm-2 deleteButton" (click)="onRemoveItem(i)">X</button>
             </div>
-            <span class="dragMsg" *ngIf="groupContacts?.length < 1">Drag contacts in group here</span>
+      
+            <!-- Display message when no contacts are in the group -->
+            <span class="dragMsg" *ngIf="groupContacts.length === 0">Drag contacts into this group</span>
           </div>
         </div>
       </div>
+      
 
       <!-- Error message for required fields -->
       <div *ngIf="name.invalid && name.touched || email.invalid && email.touched" class="alert alert-danger">

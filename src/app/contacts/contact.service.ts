@@ -22,14 +22,13 @@ export class ContactService implements OnInit {
   ngOnInit() {}
 
   getContact(id: string): Contact | undefined {
-    for (const contact of this.contacts) {
-      if (contact.id === id) {
-        return contact;
-      }
-    }
-    return undefined; // Return undefined if contact is not found
+    return this.contacts.find(contact => contact.id === id);
   }
 
+  getContacts(): Contact[] {
+    return this.contacts.slice(); // Return a copy of the contacts array
+  }
+  
   getMaxId(): number {
     let maxId = 0;
     this.contacts.forEach((contact) => {

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { DndModule } from 'ng2-dnd';
+
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
@@ -51,7 +51,6 @@ import { DocumentService } from './documents/document.service';
     FormsModule,
     DragDropModule,
     ReactiveFormsModule,
-    DndModule.forRoot()
   ],
   providers: [ContactService, MessageService, DocumentService],
   bootstrap: [AppComponent],
