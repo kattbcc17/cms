@@ -25,7 +25,7 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
 import { MessageService } from './messages/message.service';
 import { DocumentService } from './documents/document.service';
 import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
-
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -54,7 +54,12 @@ import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
     DragDropModule,
     ReactiveFormsModule,
   ],
-  providers: [ContactService, MessageService, DocumentService],
+  providers: [
+    ContactService,
+    MessageService,
+    DocumentService,
+    provideHttpClient(),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
