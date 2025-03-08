@@ -54,17 +54,17 @@ export class DocumentService implements OnInit {
   }
 
   storeDocuments() {
-    let originalDocuments = JSON.stringify(this.documents);
+    let documentsArray = JSON.stringify(this.documents);
     const headers = new HttpHeaders({ 'content-type': 'application/json' });
 
     this.http
       .put(
         'https://cmspro-514e6-default-rtdb.firebaseio.com/documents.json',
-        originalDocuments,
+        documentsArray,
         { headers }
     )
       // After storing documents, emit the document list change event with a cloned array
-      .subscribe(() =>
+      .subscribe(() => 
         this.documentListChangedEvent.next(this.documents.slice())
       );
   }
