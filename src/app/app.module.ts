@@ -24,6 +24,7 @@ import { DocumentEditComponent } from './documents/document-edit/document-edit.c
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
 import { MessageService } from './messages/message.service';
 import { DocumentService } from './documents/document.service';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { DocumentService } from './documents/document.service';
     DropdownDirective,
     DocumentEditComponent,
     ContactEditComponent,
+    ContactsFilterPipe,
   ],
   imports: [
     BrowserModule,
