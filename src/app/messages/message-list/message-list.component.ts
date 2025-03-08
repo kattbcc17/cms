@@ -17,14 +17,16 @@ export class MessageListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.messages = this.messageService.getMessages();
+    // Fetch initial messages from Firebase
+    this.messageService.fetchMessages();
+
+    // Subscribe to messageChangedEvent to update the messages when they change
     this.messageService.messageChangedEvent.subscribe(
       (messages: Message[]) => (this.messages = messages)
     );
   }
 
-  
   onAddMessage(message: Message) {
-    this.messages.push(message);
+    this.messages.push(message); // Add the new message to the list
   }
 }
